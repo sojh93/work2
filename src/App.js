@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Route } from 'react-router-dom'
+import { Main } from './Main';
+import Detail from "./Detail";
+import {db} from "./firebase";
+import {collection, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc} from "firebase/firestore";
+
 
 function App() {
+  
+  React.useEffect(async() => {
+    console.log(db);
+    
+    const docRef = doc(db, "work2", "J2Fr1JnCAjSmSQdufMdv");
+    updateDoc(docRef, {completed: true})
+
+  }, []);
+  
   return (
+    
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+         <BrowserRouter>
+          <Route path="/" component={Main} exact/>
+          <Route path="/detail" component={Detail} />
+        </BrowserRouter>
+      
     </div>
+
+    
   );
 }
+
+
 
 export default App;
